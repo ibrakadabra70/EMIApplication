@@ -1,0 +1,7 @@
+<resources>
+    <string name="app_name">EMI Calculator</string>
+    <string name="principal_amount">Mortgage principal amount</string>
+    <string name="enter_amount">Enter amount</string>
+    <string name="interest_amount">Interest rate</string>
+    <string name="enter_percentage">Enter precentage</string>
+</resources>
