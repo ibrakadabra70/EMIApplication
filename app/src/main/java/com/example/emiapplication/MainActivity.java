@@ -2,6 +2,8 @@ package com.example.emiapplication;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ArrayAdapter;
@@ -16,6 +18,7 @@ public class MainActivity extends AppCompatActivity {
     EditText principleEdit, rateEdit;
     Spinner spin, spin2;
 
+    //method to calculate mortgage
     public double calculateMortgage(String paymentFreq, double amortizationPeriod,double principle, double rate)
     {
         //change rate from percent to decimal
@@ -100,11 +103,12 @@ public class MainActivity extends AppCompatActivity {
         principleEdit = (EditText) findViewById(R.id.principle_amount_edit);
         rateEdit = (EditText) findViewById(R.id.interest_rate_edit);
 
-
+        //initializing button to make calcualtions
         Button button = findViewById(R.id.button);
         button.setOnClickListener(new View.OnClickListener(){
                                       @Override
                                       public void onClick(View view) {
+                                          //converting input data to double and string
                                           String paymentFreq = spin.getSelectedItem().toString();
 
                                           String amortizationPeriodTemp = spin2.getSelectedItem().toString();
@@ -116,13 +120,19 @@ public class MainActivity extends AppCompatActivity {
                                           String rateTemp = rateEdit.getText().toString();
                                           double rate = Double.parseDouble(rateTemp);
 
-                                          double monthlyPaymentstemp = calculateMortgage(paymentFreq,amortizationPeriod , principle,rate);
-                                          double monthlyPayments = Math.round(monthlyPaymentstemp * 100.0) / 100.0;
+                                          double monthlyPaymentsTemp = calculateMortgage(paymentFreq,amortizationPeriod , principle,rate);
+                                          double monthlyPayments = Math.round(monthlyPaymentsTemp * 100.0) / 100.0;
                                           String monthlyPaymentsString = String.valueOf(monthlyPayments);
 
+                                          String output = "Your " +paymentFreq+ " payment is: " +monthlyPaymentsString;
 
+                                          //Using intent to display results on next page
+                                          Intent intent = new Intent(MainActivity.this,ResultActivity.class);
+                                          intent.putExtra("Output", output);
+                                          startActivity(intent);
 
-                                          ((TextView) MainActivity.this.findViewById(R.id.result)).setText("Your " +paymentFreq+ " payment is: " +monthlyPaymentsString);
+                                          //To Display on current page
+                                          //(TextView) MainActivity.this.findViewById(R.id.result)).setText("Your " +paymentFreq+ " payment is: " +monthlyPaymentsString);
 
 
 
